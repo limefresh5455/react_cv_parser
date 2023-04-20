@@ -14,11 +14,14 @@ import logoss from "./assets/img/profile_img.jpg";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import { Link } from "react-router-dom";
+import { Link ,Redirect} from "react-router-dom";
 
 
 
-function Home() {
+function Home({authorized}) {
+  if(!authorized){
+    return <Redirect to ="/signin"/>
+  }
   useEffect(() => {
     (() => {
       const openNavMenu = document.querySelector(".open-nav-menu"),

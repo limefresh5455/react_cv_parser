@@ -51,22 +51,23 @@ const img = {
   height: "100%",
 };
 
-function Dashboard() {
+function Dashboard({authorized}) {
+  let store =JSON.parse(localStorage.getItem('login'));
+  let authToken = store.token
   const [files, setFiles] = React.useState([]);
-  // const [uploadedSuccesfully, setuploadedSuccesfully] = React.useState(false);
+  
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
   };
-
-
+  
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "pdf/*": [],
     },
     onDrop: (acceptedFiles) => {
-      console.log("accepted file is " +acceptedFiles[0]);
+      console.log("accepted file is " + acceptedFiles);
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -75,22 +76,19 @@ function Dashboard() {
         )
       );
 
-
-var formdata = new FormData();
-formdata.append("resume", acceptedFiles[0]);
-var myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxOTk2NTY3NDIyLCJpYXQiOjE2ODE0NjY2MjIsImp0aSI6IjAxZjAxNDhlNDAwZDRiNGZiZTEzMmU3YjNhZGIzMTljIiwidXNlcl9pZCI6Mn0.RPpM861vyAr44bgaZQBzXP5K0bF6FF2x8oM6R2F5Ji8");
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: formdata,
-  redirect: 'follow'
-};
-
-// Upload CV
-
-   fetch("https://456c-182-70-252-19.ngrok-free.app/upload/", requestOptions)
+  var formdata = new FormData();
+  formdata.append("resume", acceptedFiles[0]);
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${authToken}`);
+  
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: formdata,
+    redirect: 'follow'
+  };
+  console.log(requestOptions.body)
+     fetch("https://b021-182-70-252-19.ngrok-free.app/upload/", requestOptions)
       .then(response => console.log(response))
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -124,43 +122,33 @@ var requestOptions = {
 
 function downloadDataEng()
 {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${authToken}`);
 
-// Options
-var myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxOTk2NTY3NDIyLCJpYXQiOjE2ODE0NjY2MjIsImp0aSI6IjAxZjAxNDhlNDAwZDRiNGZiZTEzMmU3YjNhZGIzMTljIiwidXNlcl9pZCI6Mn0.RPpM861vyAr44bgaZQBzXP5K0bF6FF2x8oM6R2F5Ji8");
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
-
-
-fetch('https://1f9e-182-70-252-19.ngrok-free.app/download/80',requestOptions)
-.then(response => response.blob())
-.then(blob => {
-  const url = window.URL.createObjectURL(new Blob([blob]));
-  console.log("download is " +url);
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', 'document.docx');
-  document.body.appendChild(link);
-  link.click();
-});
-
-
-
-
+  fetch('https://b021-182-70-252-19.ngrok-free.app/download/ ',requestOptions)
+  .then(response => response.blob())
+  .then(blob => {
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    console.log("download is " +url);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'document.docx');
+    document.body.appendChild(link);
+    link.click();
+  });
 }
-
 // Download in German
-
 function downloadDataGer()
 {
-
 // Options
 var myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxOTk2NTY3NDIyLCJpYXQiOjE2ODE0NjY2MjIsImp0aSI6IjAxZjAxNDhlNDAwZDRiNGZiZTEzMmU3YjNhZGIzMTljIiwidXNlcl9pZCI6Mn0.RPpM861vyAr44bgaZQBzXP5K0bF6FF2x8oM6R2F5Ji8");
+myHeaders.append("Authorization", `Bearer ${authToken}`);
 
 var requestOptions = {
   method: 'GET',
@@ -168,12 +156,10 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-
-fetch('https://1f9e-182-70-252-19.ngrok-free.app/downloadgerman/80',requestOptions)
+fetch('https://1f9e-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOptions)
 .then(response => response.blob())
 .then(blob => {
   const url = window.URL.createObjectURL(new Blob([blob]));
-
   console.log("download is " +url);
   const link = document.createElement('a');
   link.href = url;
@@ -181,13 +167,7 @@ fetch('https://1f9e-182-70-252-19.ngrok-free.app/downloadgerman/80',requestOptio
   document.body.appendChild(link);
   link.click();
 });
-
-
-
-
 }
-
-
   return (
     <>
       <Container fluid>
