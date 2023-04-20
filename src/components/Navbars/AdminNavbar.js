@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation ,useHistory} from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 import '../index.css'
 import routes from "routes.js";
@@ -7,6 +7,7 @@ import logo from "../../assets/img/profile_img.jpg";
 
 
 function Header() {
+  let history = useHistory();
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -28,6 +29,11 @@ function Header() {
     }
     return "Brand";
   };
+
+  const logOut = () => {
+    localStorage.removeItem('login')
+    history.push("/signin")
+  }
   return (
     <Navbar bg="dark" expand="lg">
       <Container fluid>
@@ -172,8 +178,11 @@ function Header() {
             <Nav.Item>
             <img src={logo} alt="" srcset="" style={{width:'40px', borderRadius:'50px'}} />
             </Nav.Item>
+           
           </Nav>
         </Navbar.Collapse>
+        <button variant="danger" className="nav_logOut_btn"  onClick={logOut}>Log Out</button>
+
       </Container>
     </Navbar>
   );

@@ -908,12 +908,7 @@ body{background-color:#eee;}
 
   /* Saved resume Page */
 
-  .saved_resume_table th
+  .saved_resume_table
   {
-	text-align: center !important;
-	margin: 0 auto;
+	
   }
-
-  .modal.show .modal-dialog {
-    transform: translate(0, 0%);
-}
