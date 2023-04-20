@@ -88,7 +88,7 @@ function Dashboard({authorized}) {
     redirect: 'follow'
   };
   console.log(requestOptions.body)
-     fetch("https://b021-182-70-252-19.ngrok-free.app/upload/", requestOptions)
+     fetch("https://5140-182-70-252-19.ngrok-free.app/upload/", requestOptions)
       .then(response => console.log(response))
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -131,7 +131,7 @@ function downloadDataEng()
     redirect: 'follow'
   };
 
-  fetch('https://b021-182-70-252-19.ngrok-free.app/download/ ',requestOptions)
+  fetch('https://5140-182-70-252-19.ngrok-free.app/download/ ',requestOptions)
   .then(response => response.blob())
   .then(blob => {
     const url = window.URL.createObjectURL(new Blob([blob]));
@@ -156,7 +156,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch('https://1f9e-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOptions)
+fetch('https://5140-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOptions)
 .then(response => response.blob())
 .then(blob => {
   const url = window.URL.createObjectURL(new Blob([blob]));
