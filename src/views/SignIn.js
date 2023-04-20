@@ -39,18 +39,21 @@ const formik = useFormik({
       body: JSON.stringify(user),
     }).then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log(data.detail)
         localStorage.setItem('login',JSON.stringify({
           login:true,
           token:data.access
         }))
         if(data.access){
-          toast.success('Login Success', {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
-             alert("loginSucces")
+          toast.success('Success Notification !')
             history.push("/admin/dashboard ")
           } 
+          if(data.detail){
+            toast.error(data.detail ,{
+              position: toast.POSITION.TOP_CENTER,
+              className: 'toast-message'
+            })
+          }
       }).catch((e) => {
         console.log("errors", e);
       });

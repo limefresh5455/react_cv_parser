@@ -905,3 +905,18 @@ body{background-color:#eee;}
  .signin_form:focus {
 	border: 2px solid #2ddb81;
   }
+  .nav_logOut_btn{
+	background-color: rgb(225, 102, 102);
+	margin-left: 20px;
+	font-size: 14px;
+	border: none;
+  }
+  .toast-message {
+
+	background: darkblue;
+	color: #fff;
+	font-size: 20px;
+	width: 44vw;
+	/* padding: 30px 20px; */
+	/* margin-left: 20px; */
+ }
