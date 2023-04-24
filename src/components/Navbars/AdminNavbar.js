@@ -33,6 +33,7 @@ function Header() {
   const logOut = () => {
     localStorage.removeItem('login')
     history.push("/signin")
+
   }
   return (
     <Navbar bg="dark" expand="lg">
@@ -176,12 +177,41 @@ function Header() {
 
              
             <Nav.Item>
-            <img src={logo} alt="" srcset="" style={{width:'40px', borderRadius:'50px'}} />
+            <Dropdown as={Nav.Item}>
+            <Dropdown.Toggle
+              as={Nav.Link}
+              data-toggle="dropdown"
+              id="dropdown-67443507"
+              variant="default"
+              className="m-0"
+            >
+            <img src={logo} alt="" srcset="" style={{width:'30px', borderRadius:'30px'}} />
+          
+              <span className="notification">2</span>
+              <span className="d-lg-none ml-1">Notification</span>
+            </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item
+              href="#pablo"
+          
+            >
+              Setting
+            </Dropdown.Item>
+            <Dropdown.Item
+              href="#pablo"
+              onClick={logOut}
+            >
+            <span>Logout</span>
+            </Dropdown.Item>
+      
+          </Dropdown.Menu>
+             </Dropdown>
+
             </Nav.Item>
            
           </Nav>
         </Navbar.Collapse>
-        <button variant="danger" className="nav_logOut_btn"  onClick={logOut}>Log Out</button>
+      
 
       </Container>
     </Navbar>

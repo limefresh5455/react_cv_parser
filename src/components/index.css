@@ -910,5 +910,14 @@ body{background-color:#eee;}
 
   .saved_resume_table
   {
-	
+		background-color: transparent;
+  }
+  .profile_name_icon
+  {
+	background-color:#1b1b1b;
+	border-radius: 5px;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	padding: 10px;
   }

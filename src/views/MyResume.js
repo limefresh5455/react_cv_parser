@@ -1,5 +1,7 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { FcOpenedFolder } from "react-icons/fc";
+import moment from "moment";
+import axios from "axios";
 
 // react-bootstrap components
 import {
@@ -12,113 +14,297 @@ import {
   Container,
   Row,
   Col,
-  Modal
+  Modal,
 } from "react-bootstrap";
 // Modal Code
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-    
-    
-
-      <Modal.Body>
-      <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
-
 function MyResume() {
-// Modal State
-const [modalShow, setModalShow] = React.useState(false);
+  useEffect(() => {
+    let store = JSON.parse(localStorage.getItem("login"));
+    let authToken = store.token;
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authToken}`);
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch('https://ed9d-182-70-252-19.ngrok-free.app/userresume/',requestOptions)
+    .then((response) =>{
+      console.log("res is " ,response.json());
+    }
+    )
+  }, []);
+    //
+
+    // fetch(
+    //   "https://ed9d-182-70-252-19.ngrok-free.app/userresume/",
+    //   requestOptions
+    // )
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     // Do something with the data
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
 
 
+  //
 
   return (
     <>
       <Container fluid>
-     
-
-    <MyVerticallyCenteredModal
-      show={modalShow}
-      onHide={() => setModalShow(false)}
-    />
         <Row>
-          <Col md="12">
-          <Table className="saved_resume_table" striped bordered hover variant="dark">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>CV Name</th>
-          <th>Preview</th>
-          <th>Download</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Ravi</td>
-          <td style={{ textAlign:'center'}}>  <Button variant="warning"  onClick={() => setModalShow(true)}>Preview</Button></td>
-          <td style={{background:'', display:'flex', justifyContent:'space-around'}}> <Button variant="primary" style={{background: '#3472F7',color: '#fff'}}>Download in English</Button> <Button variant="success" style={{background: '#87CB1B',color: '#fff'}} >Download in German</Button></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Ravi</td>
-          <td style={{ textAlign:'center'}}>  <Button variant="warning"  onClick={() => setModalShow(true)}>Preview</Button></td>
-          <td style={{background:'', display:'flex', justifyContent:'space-around'}}> <Button variant="primary" style={{background: '#3472F7',color: '#fff'}}>Download in English</Button> <Button variant="success" style={{background: '#87CB1B',color: '#fff'}} >Download in German</Button></td>
-
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Ravi</td>
-          <td style={{ textAlign:'center'}}>  <Button variant="warning"  onClick={() => setModalShow(true)}>Preview</Button></td>
-          <td style={{background:'', display:'flex', justifyContent:'space-around'}}> <Button variant="primary" style={{background: '#3472F7',color: '#fff'}}>Download in English</Button> <Button variant="success" style={{background: '#87CB1B',color: '#fff'}} >Download in German</Button></td>
-
-        </tr>
-      </tbody>
-    </Table>
+          <Col md="6">
+            <h6
+              className="text-secondary"
+              style={{
+                color: "#fff",
+                textTransform: "capitalize",
+                fontSize: "20px",
+              }}
+            >
+              Last Profiles
+            </h6>
           </Col>
-         
+
+          <Col md="6">
+            <h6
+              className="text-secondary"
+              style={{
+                color: "#fff",
+                textTransform: "capitalize",
+                fontSize: "20px",
+              }}
+            >
+              History Overview
+            </h6>
+          </Col>
+
+          <Col md="12" style={{ backgroundColor: "", padding: "40px 0" }}>
+            <table class="table table-dark  table-borderless saved_resume_table  table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Profile Name</th>
+                  <th scope="col">File Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="text-secondary">
+                    2 June 2022{" "}
+                    <span
+                      style={{
+                        color: "#fff",
+                        padding: "5px 0",
+                        display: "block",
+                        fontSize: "12px",
+                      }}
+                    >
+                      4:45PM
+                    </span>
+                  </td>
+
+                  <td className="text-secondary">
+                    {" "}
+                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                  </td>
+                  <td>60KB</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="success"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#05cb65",
+                        border: "none",
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-secondary">
+                    2 June 2022{" "}
+                    <span
+                      style={{
+                        color: "#fff",
+                        padding: "5px 0",
+                        display: "block",
+                        fontSize: "12px",
+                      }}
+                    >
+                      4:45PM
+                    </span>
+                  </td>
+
+                  <td className="text-secondary">
+                    {" "}
+                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                  </td>
+                  <td>50KB</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="success"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#05cb65",
+                        border: "none",
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-secondary">
+                    2 June 2022{" "}
+                    <span
+                      style={{
+                        color: "#fff",
+                        padding: "5px 0",
+                        display: "block",
+                        fontSize: "12px",
+                      }}
+                    >
+                      4:45PM
+                    </span>
+                  </td>
+
+                  <td className="text-secondary">
+                    {" "}
+                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                  </td>
+                  <td>45KB</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="success"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#05cb65",
+                        border: "none",
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-secondary">
+                    2 June 2022{" "}
+                    <span
+                      style={{
+                        color: "#fff",
+                        padding: "5px 0",
+                        display: "block",
+                        fontSize: "12px",
+                      }}
+                    >
+                      4:45PM
+                    </span>
+                  </td>
+
+                  <td className="text-secondary">
+                    {" "}
+                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                  </td>
+                  <td>60KB</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="success"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#05cb65",
+                        border: "none",
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-secondary">
+                    2 June 2022{" "}
+                    <span
+                      style={{
+                        color: "#fff",
+                        padding: "5px 0",
+                        display: "block",
+                        fontSize: "12px",
+                      }}
+                    >
+                      4:45PM
+                    </span>
+                  </td>
+                  <td className="text-secondary">
+                    {" "}
+                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                  </td>
+                  <td>60KB</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="success"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#05cb65",
+                        border: "none",
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-secondary">
+                    2 June 2022{" "}
+                    <span
+                      style={{
+                        color: "#fff",
+                        padding: "5px 0",
+                        display: "block",
+                        fontSize: "12px",
+                      }}
+                    >
+                      4:45PM
+                    </span>
+                  </td>
+
+                  <td className="text-secondary">
+                    {" "}
+                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                  </td>
+                  <td>60KB</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="success"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#05cb65",
+                        border: "none",
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Col>
         </Row>
-        
       </Container>
     </>
   );

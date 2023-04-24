@@ -14,13 +14,11 @@ import logoss from "./assets/img/profile_img.jpg";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import { Link ,Redirect} from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-
-
-function Home({authorized}) {
-  if(!authorized){
-    return <Redirect to ="/signin"/>
+function Home({ authorized }) {
+  if (!authorized) {
+    return <Redirect to="/signin" />;
   }
   useEffect(() => {
     (() => {
@@ -189,8 +187,10 @@ function Home({authorized}) {
 
             <div className="home_navigation_btn">
               <button>Get Demo</button>
-             {/*  <p>Contact Sales</p> */}
-              <Link to="/signin" style={{color:'#fff', lineHeight:'30px'}}>Sign In</Link>
+              {/*  <p>Contact Sales</p> */}
+              <Link to="/signin" style={{ color: "#fff", lineHeight: "30px" }}>
+                Sign In
+              </Link>
             </div>
 
             <div className="open-nav-menu">
@@ -302,22 +302,22 @@ function Home({authorized}) {
                 nav
               >
                 <div class="item">
-                  <img src={owl_1} alt="" srcset="" height='350px' />
+                  <img src={owl_1} alt="" srcset="" height="350px" />
                 </div>
                 <div class="item">
-                  <img src={owl_2} alt="" srcset="" height='350px' />
+                  <img src={owl_2} alt="" srcset="" height="350px" />
                 </div>
                 <div class="item">
-                  <img src={owl_3} alt="" srcset="" height='350px' />
+                  <img src={owl_3} alt="" srcset="" height="350px" />
                 </div>
                 <div class="item">
-                  <img src={owl_1} alt="" srcset="" height='350px' />
+                  <img src={owl_1} alt="" srcset="" height="350px" />
                 </div>
                 <div class="item">
-                  <img src={owl_2} alt="" srcset="" height='350px' />
+                  <img src={owl_2} alt="" srcset="" height="350px" />
                 </div>
                 <div class="item">
-                  <img src={owl_3} alt="" srcset="" height='350px' />
+                  <img src={owl_3} alt="" srcset="" height="350px" />
                 </div>
                 -
               </OwlCarousel>
@@ -326,7 +326,7 @@ function Home({authorized}) {
           </Row>
         </Container>
 
-        <Container style={{ backgroundColor: "", padding:'50px 0' }}>
+        <Container style={{ backgroundColor: "", padding: "50px 0" }}>
           <Row>
             <Col>
               <h2
@@ -358,24 +358,37 @@ function Home({authorized}) {
             </Col>
 
             <Col>
-
-            <div style={{backgroundColor:'', display:'flex'}}>
-            <FaRegSnowflake style={{fontSize:'25px', color:'rgb(0, 247, 119)'}}/>
-            <p style={{ color: "#fff", fontSize:'18px' ,marginLeft:'20px' }}>
-              short description goes in here lorem ipsum is a placeholder 
-            </p>
-            </div>
-           
+              <div style={{ backgroundColor: "", display: "flex" }}>
+                <FaRegSnowflake
+                  style={{ fontSize: "25px", color: "rgb(0, 247, 119)" }}
+                />
+                <p
+                  style={{
+                    color: "#fff",
+                    fontSize: "18px",
+                    marginLeft: "20px",
+                  }}
+                >
+                  short description goes in here lorem ipsum is a placeholder
+                </p>
+              </div>
             </Col>
           </Row>
-
 
           {/*  2*4 sections */}
           <Row
             className="gx-5"
-            style={{ paddingTop: "30px", backgroundColor:'' }}
+            style={{ paddingTop: "30px", backgroundColor: "" }}
           >
-            <Col style={{ backgroundColor: "#22242f", color: "#fff", padding: "40px 20px", margin: "10px", borderRadius:'20px' }}>
+            <Col
+              style={{
+                backgroundColor: "#22242f",
+                color: "#fff",
+                padding: "40px 20px",
+                margin: "10px",
+                borderRadius: "20px",
+              }}
+            >
               <h6>Amazing tool! Saved me months</h6>
               <p>
                 This is a placeholder for your testimonials and what your client
@@ -394,7 +407,15 @@ function Home({authorized}) {
               </div>
             </Col>
 
-            <Col style={{ backgroundColor: "#131317", color: "#fff", padding: "40px 20px", margin: "10px",borderRadius:'20px'  }}>
+            <Col
+              style={{
+                backgroundColor: "#131317",
+                color: "#fff",
+                padding: "40px 20px",
+                margin: "10px",
+                borderRadius: "20px",
+              }}
+            >
               <h6>Amazing tool! Saved me months</h6>
               <p>
                 This is a placeholder for your testimonials and what your client
@@ -414,12 +435,19 @@ function Home({authorized}) {
             </Col>
           </Row>
 
-          
           <Row
             className="gx-5"
-            style={{ padding: "0px 0", backgroundColor:'' }}
+            style={{ padding: "0px 0", backgroundColor: "" }}
           >
-            <Col style={{ backgroundColor: "#131317", color: "#fff", padding: "40px 20px", margin: "10px",borderRadius:'20px' }}>
+            <Col
+              style={{
+                backgroundColor: "#131317",
+                color: "#fff",
+                padding: "40px 20px",
+                margin: "10px",
+                borderRadius: "20px",
+              }}
+            >
               <h6>Amazing tool! Saved me months</h6>
               <p>
                 This is a placeholder for your testimonials and what your client
@@ -438,7 +466,15 @@ function Home({authorized}) {
               </div>
             </Col>
 
-            <Col style={{ backgroundColor: "#22242f", color: "#fff", padding: "40px 20px", margin: "10px",borderRadius:'20px'  }}>
+            <Col
+              style={{
+                backgroundColor: "#22242f",
+                color: "#fff",
+                padding: "40px 20px",
+                margin: "10px",
+                borderRadius: "20px",
+              }}
+            >
               <h6>Amazing tool! Saved me months</h6>
               <p>
                 This is a placeholder for your testimonials and what your client
@@ -459,205 +495,221 @@ function Home({authorized}) {
           </Row>
         </Container>
 
-
         {/* PricingTable */}
-        <Container fluid style={{backgroundColor:'#fff'}}>
-        
-        <div id="generic_price_table">   
-<section style={{backgroundColor:'#101010', margin:'0 -15px', padding:'40px 0'}}>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
+        <Container fluid style={{ backgroundColor: "#fff" }}>
+          <div id="generic_price_table">
+            <section
+              style={{
+                backgroundColor: "#101010",
+                margin: "0 -15px",
+                padding: "40px 0",
+              }}
+            >
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
                     <div class="price-heading clearfix">
-                        <h1 style={{color:'#fff'}}> Pricing </h1>
+                      <h1 style={{ color: "#fff" }}> Pricing </h1>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-        <div class="container">
-            
-            <div class="row">
-                <div class="col-md-3">
-                
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3">
                     <div class="generic_content clearfix">
-                        
-                        <div class="generic_head_price clearfix">
-                        
-                            <div class="generic_head_content clearfix">
-                            
-                                <div class="head_bg"></div>
-                                <div class="head">
-                                    <span>Starter </span>
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="generic_price_tag clearfix">	
-                                <span class="price">
-                                    <span class="sign">$</span>
-                                    <span class="currency">99</span>
-                                    <span class="cent">.99</span>
-                                    <span class="month">/MON</span>
-                                </span>
-                            </div>
-                            
-                        </div>                            
-                        
-                        <div class="generic_feature_list">
-                        	<ul>
-                            	<li><span>2GB</span> Bandwidth</li>
-                                <li><span>150GB</span> Storage</li>
-                                <li><span>12</span> Accounts</li>
-                                <li><span>7</span> Host Domain</li>
-                                <li><span>24/7</span> Support</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="generic_price_btn clearfix">
-                        	<a class="" href="">Get Started Plan</a>
-                        </div>
-                        
-                    </div>
-                        
-                </div>
-                
-                <div class="col-md-3">
-                
-                    <div class="generic_content active clearfix">
-                        
-                        <div class="generic_head_price clearfix">
-                        
-                            <div class="generic_head_content clearfix">
-                            
-                                <div class="head_bg"></div>
-                                <div class="head">
-                                    <span> Essential</span>
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="generic_price_tag clearfix">	
-                                <span class="price">
-                                    <span class="sign">$</span>
-                                    <span class="currency">199</span>
-                                    <span class="cent">.99</span>
-                                    <span class="month">/MON</span>
-                                </span>
-                            </div>
-                            
-                        </div>                            
-                        
-                        <div class="generic_feature_list">
-                        	<ul>
-                            	<li><span>2GB</span> Bandwidth</li>
-                                <li><span>150GB</span> Storage</li>
-                                <li><span>12</span> Accounts</li>
-                                <li><span>7</span> Host Domain</li>
-                                <li><span>24/7</span> Support</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="generic_price_btn clearfix">
-                        	<a class="" href="">Get Essential Plan</a>
-                        </div>
-                        
-                    </div>
-                        
-                </div>
-                <div class="col-md-3">
-                
-                    <div class="generic_content clearfix">
-                        
-                        <div class="generic_head_price clearfix">
-                        
-                            <div class="generic_head_content clearfix">
-                            
-                                <div class="head_bg"></div>
-                                <div class="head">
-                                    <span>Pro</span>
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="generic_price_tag clearfix">	
-                                <span class="price">
-                                    <span class="sign">$</span>
-                                    <span class="currency">299</span>
-                                    <span class="cent">.99</span>
-                                    <span class="month">/MON</span>
-                                </span>
-                            </div>
-                            
-                        </div>                            
-                        
-                        <div class="generic_feature_list">
-                        	<ul>
-                            	<li><span>2GB</span> Bandwidth</li>
-                                <li><span>150GB</span> Storage</li>
-                                <li><span>12</span> Accounts</li>
-                                <li><span>7</span> Host Domain</li>
-                                <li><span>24/7</span> Support</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="generic_price_btn clearfix">
-                        	<a class="" href="">Get Pro Plan</a>
-                        </div>
-                   
-                        
-                    </div>
-                    
-                        
-                </div>
-
-                <div class="col-md-3">
-                
-                <div class="generic_content active clearfix">
-                    
-                    <div class="generic_head_price clearfix">
-                    
+                      <div class="generic_head_price clearfix">
                         <div class="generic_head_content clearfix">
-                        
-                            <div class="head_bg"></div>
-                            <div class="head">
-                                <span>Ultimate</span>
-                            </div>
-                            
+                          <div class="head_bg"></div>
+                          <div class="head">
+                            <span>Starter </span>
+                          </div>
                         </div>
-                        
-                        <div class="generic_price_tag clearfix">	
-                            <span class="price">
-                                <span class="sign">$</span>
-                                <span class="currency">199</span>
-                                <span class="cent">.99</span>
-                                <span class="month">/MON</span>
-                            </span>
+
+                        <div class="generic_price_tag clearfix">
+                          <span class="price">
+                            <span class="sign">$</span>
+                            <span class="currency">99</span>
+                            <span class="cent">.99</span>
+                            <span class="month">/MON</span>
+                          </span>
                         </div>
-                        
-                    </div>                            
-                    
-                    <div class="generic_feature_list">
-                      <ul>
-                          <li><span>2GB</span> Bandwidth</li>
-                            <li><span>150GB</span> Storage</li>
-                            <li><span>12</span> Accounts</li>
-                            <li><span>7</span> Host Domain</li>
-                            <li><span>24/7</span> Support</li>
+                      </div>
+
+                      <div class="generic_feature_list">
+                        <ul>
+                          <li>
+                            <span>2GB</span> Bandwidth
+                          </li>
+                          <li>
+                            <span>150GB</span> Storage
+                          </li>
+                          <li>
+                            <span>12</span> Accounts
+                          </li>
+                          <li>
+                            <span>7</span> Host Domain
+                          </li>
+                          <li>
+                            <span>24/7</span> Support
+                          </li>
                         </ul>
+                      </div>
+
+                      <div class="generic_price_btn clearfix">
+                        <a class="" href="">
+                          Get Started Plan
+                        </a>
+                      </div>
                     </div>
-                    
-                    <div class="generic_price_btn clearfix">
-                      <a class="" href="">Get Ultimate Plan</a>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="generic_content active clearfix">
+                      <div class="generic_head_price clearfix">
+                        <div class="generic_head_content clearfix">
+                          <div class="head_bg"></div>
+                          <div class="head">
+                            <span> Essential</span>
+                          </div>
+                        </div>
+
+                        <div class="generic_price_tag clearfix">
+                          <span class="price">
+                            <span class="sign">$</span>
+                            <span class="currency">199</span>
+                            <span class="cent">.99</span>
+                            <span class="month">/MON</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="generic_feature_list">
+                        <ul>
+                          <li>
+                            <span>2GB</span> Bandwidth
+                          </li>
+                          <li>
+                            <span>150GB</span> Storage
+                          </li>
+                          <li>
+                            <span>12</span> Accounts
+                          </li>
+                          <li>
+                            <span>7</span> Host Domain
+                          </li>
+                          <li>
+                            <span>24/7</span> Support
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="generic_price_btn clearfix">
+                        <a class="" href="">
+                          Get Essential Plan
+                        </a>
+                      </div>
                     </div>
-                    
+                  </div>
+                  <div class="col-md-3">
+                    <div class="generic_content clearfix">
+                      <div class="generic_head_price clearfix">
+                        <div class="generic_head_content clearfix">
+                          <div class="head_bg"></div>
+                          <div class="head">
+                            <span>Pro</span>
+                          </div>
+                        </div>
+
+                        <div class="generic_price_tag clearfix">
+                          <span class="price">
+                            <span class="sign">$</span>
+                            <span class="currency">299</span>
+                            <span class="cent">.99</span>
+                            <span class="month">/MON</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="generic_feature_list">
+                        <ul>
+                          <li>
+                            <span>2GB</span> Bandwidth
+                          </li>
+                          <li>
+                            <span>150GB</span> Storage
+                          </li>
+                          <li>
+                            <span>12</span> Accounts
+                          </li>
+                          <li>
+                            <span>7</span> Host Domain
+                          </li>
+                          <li>
+                            <span>24/7</span> Support
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="generic_price_btn clearfix">
+                        <a class="" href="">
+                          Get Pro Plan
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="generic_content active clearfix">
+                      <div class="generic_head_price clearfix">
+                        <div class="generic_head_content clearfix">
+                          <div class="head_bg"></div>
+                          <div class="head">
+                            <span>Ultimate</span>
+                          </div>
+                        </div>
+
+                        <div class="generic_price_tag clearfix">
+                          <span class="price">
+                            <span class="sign">$</span>
+                            <span class="currency">199</span>
+                            <span class="cent">.99</span>
+                            <span class="month">/MON</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="generic_feature_list">
+                        <ul>
+                          <li>
+                            <span>2GB</span> Bandwidth
+                          </li>
+                          <li>
+                            <span>150GB</span> Storage
+                          </li>
+                          <li>
+                            <span>12</span> Accounts
+                          </li>
+                          <li>
+                            <span>7</span> Host Domain
+                          </li>
+                          <li>
+                            <span>24/7</span> Support
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="generic_price_btn clearfix">
+                        <a class="" href="">
+                          Get Ultimate Plan
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                    
-            </div>
-            </div>	
-            
-        </div>
-    </section>     
-</div>
+              </div>
+            </section>
+          </div>
         </Container>
       </section>
     </>

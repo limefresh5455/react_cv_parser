@@ -55,7 +55,7 @@ function Dashboard({authorized}) {
   let store =JSON.parse(localStorage.getItem('login'));
   let authToken = store.token
   const [files, setFiles] = React.useState([]);
-  
+
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
@@ -88,7 +88,7 @@ function Dashboard({authorized}) {
     redirect: 'follow'
   };
   console.log(requestOptions.body)
-     fetch("https://5140-182-70-252-19.ngrok-free.app/upload/", requestOptions)
+     fetch("https://ed9d-182-70-252-19.ngrok-free.app/upload/", requestOptions)
       .then(response => console.log(response))
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -131,7 +131,7 @@ function downloadDataEng()
     redirect: 'follow'
   };
 
-  fetch('https://5140-182-70-252-19.ngrok-free.app/download/ ',requestOptions)
+  fetch('https://ed9d-182-70-252-19.ngrok-free.app/download/ ',requestOptions)
   .then(response => response.blob())
   .then(blob => {
     const url = window.URL.createObjectURL(new Blob([blob]));
@@ -143,6 +143,8 @@ function downloadDataEng()
     link.click();
   });
 }
+
+
 // Download in German
 function downloadDataGer()
 {
@@ -156,7 +158,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch('https://5140-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOptions)
+fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOptions)
 .then(response => response.blob())
 .then(blob => {
   const url = window.URL.createObjectURL(new Blob([blob]));
@@ -171,7 +173,9 @@ fetch('https://5140-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOption
   return (
     <>
       <Container fluid>
-        <Row style={{ background: "#1b1b1b", height: "200px" }}>
+      
+    
+      <Row style={{ background: "#1b1b1b", height: "200px" }}>
           <Col md="12">
             
             <section className="container">

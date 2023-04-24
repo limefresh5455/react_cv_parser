@@ -37,7 +37,7 @@ function SignIn() {
         phone_no: values.phone_no,
       };
 
-      fetch("https://b021-182-70-252-19.ngrok-free.app/register/", {
+      fetch("https://ed9d-182-70-252-19.ngrok-free.app/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
