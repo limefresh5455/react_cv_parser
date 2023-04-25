@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { useHistory } from 'react-router-dom';
-import { SignInSchema } from "./SignInSchema";
+import { SignInSchema } from "./validationSchema";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,12 +26,13 @@ const formik = useFormik({
   validationSchema: SignInSchema,
 
   onSubmit: (values,action) => {
+    
     const user = {
       email: values.email,
       password: values.password,
     };
 
-    fetch("https://ed9d-182-70-252-19.ngrok-free.app/login/", {
+    fetch(`${process.env.REACT_APP_BASE_URL}login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
