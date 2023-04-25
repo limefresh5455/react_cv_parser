@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { FcOpenedFolder } from "react-icons/fc";
-import moment from "moment";
 import axios from "axios";
-
 // react-bootstrap components
 import {
   Badge,
@@ -19,45 +17,60 @@ import {
 // Modal Code
 
 function MyResume() {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   useEffect(() => {
+    const loadResume = async () => {
+      setLoading(true);
     let store = JSON.parse(localStorage.getItem("login"));
     let authToken = store.token;
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${authToken}`);
-    var requestOptions = {
+      const response = await axios(`${process.env.REACT_APP_BASE_URL}userresume/`,{
       method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
+      headers :{
+        Authorization: `Bearer ${authToken}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
 
-    fetch('https://ed9d-182-70-252-19.ngrok-free.app/userresume/',requestOptions)
-    .then((response) =>{
-      console.log("res is " ,response.json());
+    if(response){
+      setData(response.data.data)
     }
-    )
+      setLoading(false);
+    }
+    setTimeout(() => {
+      loadResume();
+    }, 1000);
+    
   }, []);
-    //
+    
+// console.log("mydataa - "+JSON.stringify(data[0]));
 
-    // fetch(
-    //   "https://ed9d-182-70-252-19.ngrok-free.app/userresume/",
-    //   requestOptions
-    // )
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     // Do something with the data
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+const downloadCv = (id) =>{
+  let store = JSON.parse(localStorage.getItem("login"));
+  let authToken = store.token;
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${authToken}`);
+     console.log(myHeaders)
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
 
-
-  //
-
+  fetch(`${process.env.REACT_APP_BASE_URL}download/`, requestOptions)
+  .then(response => response.blob())
+  .then(blob => {
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'document.docx');
+    document.body.appendChild(link);
+    link.click();
+  });
+}
   return (
     <>
       <Container fluid>
@@ -98,7 +111,10 @@ function MyResume() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {data ?
+                 data.map((edata)=>
+                (
+                  <tr>
                   <td className="text-secondary">
                     2 June 2022{" "}
                     <span
@@ -115,12 +131,13 @@ function MyResume() {
 
                   <td className="text-secondary">
                     {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> Jenny
+                    <FcOpenedFolder className="profile_name_icon" /> {edata.name}
                   </td>
                   <td>60KB</td>
                   <td>
                     {" "}
                     <Button
+                    onClick={()=> downloadCv(edata.id)}
                       variant="success"
                       style={{
                         color: "#fff",
@@ -131,177 +148,9 @@ function MyResume() {
                       Download
                     </Button>
                   </td>
-                </tr>
-                <tr>
-                  <td className="text-secondary">
-                    2 June 2022{" "}
-                    <span
-                      style={{
-                        color: "#fff",
-                        padding: "5px 0",
-                        display: "block",
-                        fontSize: "12px",
-                      }}
-                    >
-                      4:45PM
-                    </span>
-                  </td>
-
-                  <td className="text-secondary">
-                    {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> Jenny
-                  </td>
-                  <td>50KB</td>
-                  <td>
-                    {" "}
-                    <Button
-                      variant="success"
-                      style={{
-                        color: "#fff",
-                        backgroundColor: "#05cb65",
-                        border: "none",
-                      }}
-                    >
-                      Download
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-secondary">
-                    2 June 2022{" "}
-                    <span
-                      style={{
-                        color: "#fff",
-                        padding: "5px 0",
-                        display: "block",
-                        fontSize: "12px",
-                      }}
-                    >
-                      4:45PM
-                    </span>
-                  </td>
-
-                  <td className="text-secondary">
-                    {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> Jenny
-                  </td>
-                  <td>45KB</td>
-                  <td>
-                    {" "}
-                    <Button
-                      variant="success"
-                      style={{
-                        color: "#fff",
-                        backgroundColor: "#05cb65",
-                        border: "none",
-                      }}
-                    >
-                      Download
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-secondary">
-                    2 June 2022{" "}
-                    <span
-                      style={{
-                        color: "#fff",
-                        padding: "5px 0",
-                        display: "block",
-                        fontSize: "12px",
-                      }}
-                    >
-                      4:45PM
-                    </span>
-                  </td>
-
-                  <td className="text-secondary">
-                    {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> Jenny
-                  </td>
-                  <td>60KB</td>
-                  <td>
-                    {" "}
-                    <Button
-                      variant="success"
-                      style={{
-                        color: "#fff",
-                        backgroundColor: "#05cb65",
-                        border: "none",
-                      }}
-                    >
-                      Download
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-secondary">
-                    2 June 2022{" "}
-                    <span
-                      style={{
-                        color: "#fff",
-                        padding: "5px 0",
-                        display: "block",
-                        fontSize: "12px",
-                      }}
-                    >
-                      4:45PM
-                    </span>
-                  </td>
-                  <td className="text-secondary">
-                    {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> Jenny
-                  </td>
-                  <td>60KB</td>
-                  <td>
-                    {" "}
-                    <Button
-                      variant="success"
-                      style={{
-                        color: "#fff",
-                        backgroundColor: "#05cb65",
-                        border: "none",
-                      }}
-                    >
-                      Download
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-secondary">
-                    2 June 2022{" "}
-                    <span
-                      style={{
-                        color: "#fff",
-                        padding: "5px 0",
-                        display: "block",
-                        fontSize: "12px",
-                      }}
-                    >
-                      4:45PM
-                    </span>
-                  </td>
-
-                  <td className="text-secondary">
-                    {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> Jenny
-                  </td>
-                  <td>60KB</td>
-                  <td>
-                    {" "}
-                    <Button
-                      variant="success"
-                      style={{
-                        color: "#fff",
-                        backgroundColor: "#05cb65",
-                        border: "none",
-                      }}
-                    >
-                      Download
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
+                  </tr>
+                )) : null } 
+             </tbody>
             </table>
           </Col>
         </Row>

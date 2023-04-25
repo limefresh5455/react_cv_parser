@@ -4,20 +4,15 @@ import ChartistGraph from "react-chartist";
 import Dropzone from "react-dropzone";
 import { useDropzone } from "react-dropzone";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
-  Badge,
-  Button,
+   Button,
   Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
+   Container,
   Row,
   Col,
-  Form,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
+ } from "react-bootstrap";
 
 const thumbsContainer = {
   display: "flex",
@@ -57,6 +52,7 @@ function Dashboard({authorized}) {
   const [files, setFiles] = React.useState([]);
 
   const handleFileChange = (e) => {
+    
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
@@ -67,7 +63,7 @@ function Dashboard({authorized}) {
       "pdf/*": [],
     },
     onDrop: (acceptedFiles) => {
-      console.log("accepted file is " + acceptedFiles);
+      // console.log("accepted file is " + acceptedFiles);
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -75,8 +71,9 @@ function Dashboard({authorized}) {
           })
         )
       );
+      let kb = acceptedFiles[0].size/1024;
 
-  var formdata = new FormData();
+      var formdata = new FormData();
   formdata.append("resume", acceptedFiles[0]);
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${authToken}`);
@@ -87,12 +84,17 @@ function Dashboard({authorized}) {
     body: formdata,
     redirect: 'follow'
   };
-  console.log(requestOptions.body)
-     fetch("https://ed9d-182-70-252-19.ngrok-free.app/upload/", requestOptions)
-      .then(response => console.log(response))
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-      
+ 
+     fetch(`${process.env.REACT_APP_BASE_URL}/upload/`, requestOptions)
+      .then(response => response.json())
+  .then((result) =>{if(result.success){
+    toast.success('Successfully Upload!',{
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast-message'
+    })
+  }} )
+  .catch(error => console.error(error));
+ 
     },
   });
   const files1 = JSON.stringify(files);
@@ -173,11 +175,8 @@ fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOption
   return (
     <>
       <Container fluid>
-      
-    
       <Row style={{ background: "#1b1b1b", height: "200px" }}>
           <Col md="12">
-            
             <section className="container">
               <div
                 {...getRootProps({ className: "dropzone" })}
@@ -197,6 +196,7 @@ fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOption
                   Drop Down your CV
                 </p>
                 <aside style={thumbsContainer}>{thumbs}</aside>
+                <ToastContainer autoClose={2000}/>
                 <Button variant="success" className="nav_upgrade_btn">
                   Upload CV
                 </Button>{" "}
@@ -205,9 +205,7 @@ fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOption
           </Col>
         </Row>
       </Container>
-
       {/* Choose Your Template*/}
-
       <Container fluid style={{ padding: "30px 15px", backgroundColor: "" }}>
         <Row style={{ backgroundColor: "" }}>
           <Col md="12">

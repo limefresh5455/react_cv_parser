@@ -7,12 +7,11 @@ import site from "../assets/img/site_logo_2.png";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import { SignUpSchema } from "./SignUpSchema";
+import { SignUpSchema } from "./validationSchema";
 import { error } from "jquery";
 
 function SignIn() {
   // using Formik
-
   const formInitialValues = {
     first_name: "",
     last_name: "",
@@ -37,7 +36,7 @@ function SignIn() {
         phone_no: values.phone_no,
       };
 
-      fetch("https://ed9d-182-70-252-19.ngrok-free.app/register/", {
+      fetch(`${process.env.REACT_APP_BASE_URL}register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,11 +50,8 @@ function SignIn() {
         .catch((e) => {
           console.log("errors", e);
         });
-
         action.resetForm();
     },
-
-    
   });
 
   return (
