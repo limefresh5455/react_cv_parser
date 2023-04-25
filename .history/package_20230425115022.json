@@ -14,7 +14,6 @@
     "react": ">=16.8.0",
     "react-bootstrap": "2.4.0",
     "react-chartist": "0.14.4",
-    "react-data-table-component": "^7.5.3",
     "react-dom": ">=16.8.0",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.8.0",
@@ -26,7 +25,6 @@
     "react-toastify": "^9.1.2",
     "reactstrap": "8.8.1",
     "sass": "1.53.0",
-    "styled-components": "^5.3.10",
     "yup": "^1.1.1"
   },
   "optionalDependencies": {
@@ -35,6 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

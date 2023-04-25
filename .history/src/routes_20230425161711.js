@@ -18,7 +18,7 @@ const dashboardRoutes = [
   {
     path: "/user",
     name: "User Profile",
-    icon: "nc-icon nc-credit-card",
+    icon: "nc-icon nc-fds-card",
     component: UserProfile,
     layout: "/admin"
   },

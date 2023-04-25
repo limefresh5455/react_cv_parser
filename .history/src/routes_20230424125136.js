@@ -1,7 +1,7 @@
 
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
-// import TableList from "views/TableList.js";
+import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
 import MyResume from "views/MyResume";
 
@@ -22,13 +22,13 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin"
   },
-  // {
-  //   path: "/table",
-  //   name: "Templates",
-  //   icon: "nc-icon nc-album-2",
-  //   component: TableList,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/table",
+    name: "Templates",
+    icon: "nc-icon nc-album-2",
+    component: TableList,
+    layout: "/admin"
+  },
   {
     path: "/profile",
     name: "Profile",

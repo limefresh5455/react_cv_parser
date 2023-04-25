@@ -4,6 +4,8 @@ import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 import '../index.css'
 import routes from "routes.js";
 import logo from "../../assets/img/profile_img.jpg"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Header() {
@@ -32,11 +34,17 @@ function Header() {
 
   const logOut = () => {
     localStorage.removeItem('login')
+   
+    toast.error('Logout ' ,{
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast-message'
+    })
     history.push("/signin")
 
   }
   return (
     <Navbar bg="dark" expand="lg">
+
       <Container fluid>
         <div className="d-flex justify-content-center align-items-center ml-2 ml-lg-0">
           <Button
@@ -197,6 +205,7 @@ function Header() {
             >
               Setting
             </Dropdown.Item>
+            <ToastContainer autoClose={2000}/>
             <Dropdown.Item
               href="#pablo"
               onClick={logOut}

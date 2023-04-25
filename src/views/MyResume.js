@@ -14,7 +14,7 @@ import {
   Col,
   Modal,
 } from "react-bootstrap";
-// Modal Code
+ import DataTable from "react-data-table-component";
 
 function MyResume() {
   const [loading, setLoading] = useState(false);
@@ -45,6 +45,39 @@ function MyResume() {
     }, 1000);
     
   }, []);
+
+  //Table 
+
+  const columns = [
+      {
+      name:'User Name',
+      selector: (row) =>row.name,
+      sortable: true
+    },
+
+    {
+      name:'User email',
+      selector: (row) =>row.email,
+      sortable: true
+    },
+   
+    {
+      name:'File Size',
+      selector: '235KB',
+      sortable: true
+    },
+    {
+      name:'Download',
+      cell: row =><button 
+      onClick={(edata)=> downloadCv(edata.id)}
+      variant="success"
+      style={{
+        color: "#fff",
+        backgroundColor: "#05cb65",
+        border: "none",
+      }}>Download</button>
+    },
+  ]
     
 // console.log("mydataa - "+JSON.stringify(data[0]));
 
@@ -74,87 +107,16 @@ const downloadCv = (id) =>{
   return (
     <>
       <Container fluid>
-        <Row>
-          <Col md="6">
-            <h6
-              className="text-secondary"
-              style={{
-                color: "#fff",
-                textTransform: "capitalize",
-                fontSize: "20px",
-              }}
-            >
-              Last Profiles
-            </h6>
-          </Col>
-
-          <Col md="6">
-            <h6
-              className="text-secondary"
-              style={{
-                color: "#fff",
-                textTransform: "capitalize",
-                fontSize: "20px",
-              }}
-            >
-              History Overview
-            </h6>
-          </Col>
-
-          <Col md="12" style={{ backgroundColor: "", padding: "40px 0" }}>
-            <table class="table table-dark  table-borderless saved_resume_table  table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Profile Name</th>
-                  <th scope="col">File Size</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data ?
-                 data.map((edata)=>
-                (
-                  <tr>
-                  <td className="text-secondary">
-                    2 June 2022{" "}
-                    <span
-                      style={{
-                        color: "#fff",
-                        padding: "5px 0",
-                        display: "block",
-                        fontSize: "12px",
-                      }}
-                    >
-                      4:45PM
-                    </span>
-                  </td>
-
-                  <td className="text-secondary">
-                    {" "}
-                    <FcOpenedFolder className="profile_name_icon" /> {edata.name}
-                  </td>
-                  <td>60KB</td>
-                  <td>
-                    {" "}
-                    <Button
-                    onClick={()=> downloadCv(edata.id)}
-                      variant="success"
-                      style={{
-                        color: "#fff",
-                        backgroundColor: "#05cb65",
-                        border: "none",
-                      }}
-                    >
-                      Download
-                    </Button>
-                  </td>
-                  </tr>
-                )) : null } 
-             </tbody>
-            </table>
-          </Col>
-        </Row>
+      <DataTable 
+      title ="Resume List"
+      columns= {columns} 
+      data ={data}
+      fixedHeader
+      selectableRows
+      highlightOnHover 
+      pagination/>
       </Container>
+    
     </>
   );
 }

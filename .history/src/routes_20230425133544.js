@@ -22,13 +22,13 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin"
   },
-  // {
-  //   path: "/table",
-  //   name: "Templates",
-  //   icon: "nc-icon nc-album-2",
-  //   component: TableList,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/table",
+    name: "Templates",
+    icon: "nc-icon nc-album-2",
+    component: TableList,
+    layout: "/admin"
+  },
   {
     path: "/profile",
     name: "Profile",

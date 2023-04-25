@@ -9,36 +9,10 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { SignUpSchema } from "./validationSchema";
 import { error } from "jquery";
-import GoogleLogin, { GoogleLoginProps } from "react-google-login";
-import { gapi } from "gapi-script";
-import { useEffect } from "react";
-
-const clientId="383754980533-om3adjbgkoc134k9j35117svr962apbh.apps.googleusercontent.com"
 
 function SignIn() {
-
-const onSuccess =(res)=>{
-  console.log("Login success",res.profileObj)
-}
-
-
-const onFailure =(res)=>{
-  console.log("Login unsuccess",res.profileObj)
-}
-
-useEffect(()=>{
-   function start (){
-    gapi.client.init({
-      clientId:clientId,
-      scope:" "
-    })
-   }
-
-   gapi.load('client:auth2',start)
-})
-
-
   // using Formik
+
   const formInitialValues = {
     first_name: "",
     last_name: "",
@@ -77,8 +51,11 @@ useEffect(()=>{
         .catch((e) => {
           console.log("errors", e);
         });
+
         action.resetForm();
     },
+
+    
   });
 
   return (
@@ -323,22 +300,6 @@ useEffect(()=>{
                 Create Account
               </Button>
             </Form>
-            <div>
-          <GoogleLogin
-          clientId={clientId}
-          buttonText="Login"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          cookiePolicy={'sinngle_host_origin'}
-          style={{
-            border: "none",
-            margin: " 0 auto",
-          }}
-          isSignedIn={true}
-
-          />
-          
-          </div>
 
             <p
               style={{
@@ -351,7 +312,6 @@ useEffect(()=>{
               <br /> and Fair Use Policy.
             </p>
           </Col>
-          
         </Row>
       </Container>
     </>
