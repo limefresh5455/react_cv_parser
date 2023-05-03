@@ -55,7 +55,7 @@ function Dashboard() {
   let store =JSON.parse(localStorage.getItem('login'));
   let authToken = store.token
   const [files, setFiles] = React.useState([]);
-  console.log('file is ', files);
+  console.log('pdf file is ', files);
 
   
   const { getRootProps, getInputProps } = useDropzone({
@@ -71,10 +71,14 @@ function Dashboard() {
           })
         )
       );
-      let kb = acceptedFiles[0].size/1024;
+      // let kb = acceptedFiles[0].size/1024;
 
   var formdata = new FormData();
   formdata.append("resume", acceptedFiles[0]);
+  formdata.append("resume_logo", formdata[0]);
+  formdata.append("company_name", inputValue[0]);
+
+
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${authToken}`);
   
@@ -84,8 +88,11 @@ function Dashboard() {
     body: formdata,
     redirect: 'follow'
   };
+
  
-     fetch(`https://ab75-182-70-252-19.ngrok-free.app/upload/`, requestOptions)
+
+
+     fetch(`https://44eb-182-70-252-19.ngrok-free.app/upload/`, requestOptions)
       .then(response => response.json())
       
   .then((result) =>{if(result.success){
@@ -120,7 +127,9 @@ function Dashboard() {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
-
+  const handleImageDrop = (acceptedFiles) => {
+  setImageFile(acceptedFiles[0]);
+};
 
 // Downnlaod API English
 
@@ -133,9 +142,10 @@ function downloadDataEng()
     method: 'GET',
     headers: myHeaders,
     redirect: 'follow'
+    
   };
 
-  fetch(`${process.env.REACT_APP_BASE_URL}download/`,requestOptions)
+  fetch(`https://44eb-182-70-252-19.ngrok-free.app/download/3`,requestOptions)
   .then(response => response.blob())
   .then(blob => {
     const url = window.URL.createObjectURL(new Blob([blob]));
@@ -174,9 +184,42 @@ fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOption
   link.click();
 });
 }
+
+// Extra Image Upload
+
+const [fileData, setFileData] = useState([]);
+console.log('Images data is ' ,fileData)
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const fileData = event.target.result;
+      setFileData(fileData);
+    };
+      
+  };
+
+  // Extra Input Field
+  const [inputValue, setInputValue] = useState('');
+  console.log('Website data is ' ,inputValue)
+
+const handleInputChange = (event) => {
+  setInputValue(event.target.value);
+  console.log(event.target.value);
+};
+
+  // Submit All Field
+function submitAll(){
+  alert('hiiii')
+}
+
   return (
     <>
       <Container fluid>
+      <label htmlFor="" style={{color:'#fff', marginRight:'10px'}} >Choose Image</label>
+      <input type="file" onChange={handleImageChange}/>
+      <label htmlFor="" style={{color:'#fff', marginRight:'10px'}}>Enter Company Name</label>
+      <input type="text" value={inputValue} onChange={handleInputChange}/>
       <Row style={{ background: "#1b1b1b", height: "200px" }}>
           <Col md="12">
             <section className="container">
@@ -202,7 +245,10 @@ fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOption
                 <Button variant="success" className="nav_upgrade_btn">
                   Upload CV
                 </Button>{" "}
+                  
               </div>
+
+                <button onClick={submitAll} style={{margin:'0 auto', display:'block'}}>Submit Data Here</button>
             </section>
           </Col>
         </Row>

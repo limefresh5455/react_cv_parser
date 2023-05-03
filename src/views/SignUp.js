@@ -69,7 +69,7 @@ const onSignOutSuccess = () => {
         phone_no: values.phone_no,
       };
 
-      fetch(`${process.env.REACT_APP_BASE_URL}register/`, {
+      fetch(`https://44eb-182-70-252-19.ngrok-free.app/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

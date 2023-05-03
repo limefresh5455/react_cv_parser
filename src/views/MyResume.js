@@ -17,6 +17,9 @@ import {
  import DataTable from "react-data-table-component";
 
 function MyResume() {
+
+  var a = 'ravi';
+  console.log(a);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -26,7 +29,7 @@ function MyResume() {
     let authToken = store.token;
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${authToken}`);
-      const response = await axios(`${process.env.REACT_APP_BASE_URL}userresume/`,{
+      const response = await axios(`http://16.16.70.121/userresume/`,{
       method: "GET",
       headers :{
         Authorization: `Bearer ${authToken}`,
@@ -36,7 +39,10 @@ function MyResume() {
     })
 
     if(response){
+      
+      console.log(response);
       setData(response.data.data)
+
     }
       setLoading(false);
     }
@@ -79,7 +85,6 @@ function MyResume() {
     },
   ]
     
-// console.log("mydataa - "+JSON.stringify(data[0]));
 
 const downloadCv = (id) =>{
   let store = JSON.parse(localStorage.getItem("login"));
@@ -107,14 +112,14 @@ const downloadCv = (id) =>{
   return (
     <>
       <Container fluid>
-      <DataTable 
-      title ="Resume List"
-      columns= {columns} 
-      data ={data}
-      fixedHeader
-      selectableRows
-      highlightOnHover 
-      pagination/>
+        <DataTable 
+        title ="Resume List"
+        columns= {columns} 
+        data ={data}
+        fixedHeader
+        selectableRows
+        highlightOnHover 
+        pagination/>
       </Container>
     
     </>
