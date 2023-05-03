@@ -8,59 +8,99 @@ import google from "../assets/img/google.png";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { SignInSchema } from "./validationSchema";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import GoogleButton from "react-google-button";
 
 function SignIn() {
- let history = useHistory();
-  // 
+  let history = useHistory();
+  const [user, setUser] = useState(null);
+
   const formInitialValues = {
-  email: "",
-  password: "",
-};
-const formik = useFormik({
-  initialValues: formInitialValues,
-  validationSchema: SignInSchema,
+    email: "",
+    password: "",
+  };
+  const formik = useFormik({
+    initialValues: formInitialValues,
+    validationSchema: SignInSchema,
 
-  onSubmit: (values,action) => {
-    
-    const user = {
-      email: values.email,
-      password: values.password,
-    };
+    onSubmit: (values, action) => {
+      const user = {
+        email: values.email,
+        password: values.password,
+      };
 
-    fetch(`${process.env.REACT_APP_BASE_URL}login/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    }).then((response) => response.json())
-      .then((data) => {
-        console.log(data.detail)
-        localStorage.setItem('login',JSON.stringify({
-          login:true,
-          token:data.access
-        }))
-        if(data.access){
-          toast.success('Success Notification !')
-            history.push("/admin/dashboard ")
-          } 
-          if(data.detail){
-            toast.error(data.detail ,{
-              position: toast.POSITION.TOP_CENTER,
-              className: 'toast-message'
+      fetch(`http://16.16.70.121/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem(
+            "login",
+            JSON.stringify({
+              login: true,
+              token: data.access,
             })
+          );
+          if (data.access) {
+            toast.success("Success Notification !");
+            history.push("/admin/dashboard ");
           }
-      }).catch((e) => {
+          setUser(data.access);
+          if (data.detail) {
+            toast.error(data.detail, {
+              position: toast.POSITION.TOP_CENTER,
+              className: "toast-message",
+            });
+          }
+        })
+        .catch((e) => {
+          console.log("errors", e);
+        });
+      action.resetForm();
+    },
+  });
+
+
+  function googleSignIn(){
+
+    fetch(`${process.env.REACT_APP_BASE_URL}google/`, {
+      method: "GET"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // localStorage.setItem(
+        //   "login",
+        //   JSON.stringify({
+        //     login: true,
+        //     token: data.access,
+        //   })
+        // );
+        console.log('data is ' , data)
+        if (data.access) {
+          toast.success("Success Notification !");
+          history.push("/admin/dashboard ");
+        }
+        setUser(data.access);
+        if (data.detail) {
+          toast.error(data.detail, {
+            position: toast.POSITION.TOP_CENTER,
+            className: "toast-message",
+          });
+        }
+      })
+      .catch((e) => {
         console.log("errors", e);
       });
-         action.resetForm();
-  },
-});
+
+  }
 
   return (
     <>
@@ -78,7 +118,13 @@ const formik = useFormik({
               position: "relative",
             }}
           >
-            <img src={site} alt="" srcset="" width="60" style={{marginLeft:'50px'}} />
+            <img
+              src={site}
+              alt=""
+              srcset=""
+              width="60"
+              style={{ marginLeft: "50px" }}
+            />
 
             <div
               style={{
@@ -107,8 +153,14 @@ const formik = useFormik({
               </p>
               <p style={{ color: "gray", fontWeight: "bold" }}>
                 Don't have an account?{" "}
-                <span style={{ color: "#2ddb81", fontWeight: "bold", cursor:'pointer' }}>
-                <Link to='/signup'>  Sign Up </Link>  
+                <span
+                  style={{
+                    color: "#2ddb81",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Link to="/signup"> Sign Up </Link>
                 </span>{" "}
               </p>
             </div>
@@ -134,7 +186,6 @@ const formik = useFormik({
                 transform: "translate(-50%,-50%)",
               }}
             >
-            
               <Form onSubmit={formik.handleSubmit}>
                 {/* Email */}
 
@@ -152,7 +203,12 @@ const formik = useFormik({
                     onBlur={formik.handleBlur}
                   />
 
-                  {formik.errors.email && formik.touched.email ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.email} </span>) : null }
+                  {formik.errors.email && formik.touched.email ? (
+                    <span style={{ color: "red", fontSize: "13px" }}>
+                      {" "}
+                      {formik.errors.email}{" "}
+                    </span>
+                  ) : null}
                 </Form.Group>
 
                 {/* Password */}
@@ -171,10 +227,14 @@ const formik = useFormik({
                     onBlur={formik.handleBlur}
                   />
 
-                  
-                  {formik.errors.password && formik.touched.password ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.password} </span>) : null }
+                  {formik.errors.password && formik.touched.password ? (
+                    <span style={{ color: "red", fontSize: "13px" }}>
+                      {" "}
+                      {formik.errors.password}{" "}
+                    </span>
+                  ) : null}
                 </Form.Group>
-                <ToastContainer autoClose={2000}/>
+                <ToastContainer autoClose={2000} />
                 <Button
                   variant="primary btn-block"
                   type="submit"
@@ -187,12 +247,10 @@ const formik = useFormik({
                 >
                   Sign In
                 </Button>
-               
-                <Col style={{backgroundColor:''}}>
-                <img src={google} alt="" srcset="" width='200' style={{display:'block', margin:'0 auto'}} />
-                </Col>
-                  
               </Form>
+              <GoogleButton style={{width:'100%'}}
+                  onClick={googleSignIn}
+              />
             </div>
           </Col>
         </Row>

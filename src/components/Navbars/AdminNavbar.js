@@ -97,9 +97,10 @@ function Header() {
   id="dropdown-67443507"
   variant="default"
   className="m-0"
+
 >
   <i className="nc-icon nc-email-83"></i>
-  <span className="notification">1</span>
+  <span className="notification">10</span>
   <span className="d-lg-none ml-1">Notification</span>
 </Dropdown.Toggle>
 <Dropdown.Menu>

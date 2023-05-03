@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import Dropzone from "react-dropzone";
@@ -6,6 +6,9 @@ import { useDropzone } from "react-dropzone";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
+
 import {
    Button,
   Card,
@@ -46,24 +49,21 @@ const img = {
   height: "100%",
 };
 
-function Dashboard({authorized}) {
+function Dashboard() {
+// Loader
+
   let store =JSON.parse(localStorage.getItem('login'));
   let authToken = store.token
   const [files, setFiles] = React.useState([]);
+  console.log('file is ', files);
 
-  const handleFileChange = (e) => {
-    
-    if (e.target.files) {
-      setFile(e.target.files[0]);
-    }
-  };
   
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "pdf/*": [],
     },
     onDrop: (acceptedFiles) => {
-      // console.log("accepted file is " + acceptedFiles);
+      console.log("accepted file is " + acceptedFiles);
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -73,7 +73,7 @@ function Dashboard({authorized}) {
       );
       let kb = acceptedFiles[0].size/1024;
 
-      var formdata = new FormData();
+  var formdata = new FormData();
   formdata.append("resume", acceptedFiles[0]);
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${authToken}`);
@@ -85,8 +85,9 @@ function Dashboard({authorized}) {
     redirect: 'follow'
   };
  
-     fetch(`${process.env.REACT_APP_BASE_URL}/upload/`, requestOptions)
+     fetch(`https://ab75-182-70-252-19.ngrok-free.app/upload/`, requestOptions)
       .then(response => response.json())
+      
   .then((result) =>{if(result.success){
     toast.success('Successfully Upload!',{
       position: toast.POSITION.TOP_CENTER,
@@ -94,9 +95,10 @@ function Dashboard({authorized}) {
     })
   }} )
   .catch(error => console.error(error));
- 
     },
   });
+
+
   const files1 = JSON.stringify(files);
   const files2 = JSON.parse(files1);
   const thumbs = files.map((file) => (
@@ -133,7 +135,7 @@ function downloadDataEng()
     redirect: 'follow'
   };
 
-  fetch('https://ed9d-182-70-252-19.ngrok-free.app/download/ ',requestOptions)
+  fetch(`${process.env.REACT_APP_BASE_URL}download/`,requestOptions)
   .then(response => response.blob())
   .then(blob => {
     const url = window.URL.createObjectURL(new Blob([blob]));

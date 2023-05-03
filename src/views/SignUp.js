@@ -1,41 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import site from "../assets/img/site_logo_2.png";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { SignUpSchema } from "./validationSchema";
 import { error } from "jquery";
-import GoogleLogin, { GoogleLoginProps } from "react-google-login";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
 
-const clientId="383754980533-om3adjbgkoc134k9j35117svr962apbh.apps.googleusercontent.com"
+
 
 function SignIn() {
+  const clientId =
+    "166258624058-mq0455kioo1tpk42dgqjs0qchb987h91.apps.googleusercontent.com";
+ const [showLoginButton, setShowLoginButton] = useState(true);
+ const [showLogoutButton, setShowLogoutButton] = useState(false);
 
-const onSuccess =(res)=>{
-  console.log("Login success",res.profileObj)
-}
+ let history = useHistory();
+ 
+ const onLoginSuccess = (res) => {
+   console.log("Login Success:", res.profileObj);
+   setShowLoginButton(false);
+   setShowLogoutButton(true);
+   history.push("/admin/dashboard");
+ };
+
+ const onLoginFailure = (res) => {
+   console.log("Login Failed:", res);
+ };
+
+const onSignOutSuccess = () => {
+   alert("You have been logged out successfully");
+   console.clear();
+   setShowLoginButton(true);
+   setShowLogoutButton(false);
+ };
 
 
-const onFailure =(res)=>{
-  console.log("Login unsuccess",res.profileObj)
-}
-
-useEffect(()=>{
-   function start (){
-    gapi.client.init({
-      clientId:clientId,
-      scope:" "
-    })
-   }
-
-   gapi.load('client:auth2',start)
-})
 
 
   // using Formik
@@ -179,7 +185,12 @@ useEffect(()=>{
                       value={formik.values.first_name}
                     />
 
-                    {formik.errors.first_name && formik.touched.first_name ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.first_name} </span>) : null }
+                    {formik.errors.first_name && formik.touched.first_name ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.first_name}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
 
@@ -198,8 +209,12 @@ useEffect(()=>{
                       onBlur={formik.handleBlur}
                       value={formik.values.last_name}
                     />
-                    {formik.errors.last_name && formik.touched.last_name ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.last_name} </span>) : null }
-
+                    {formik.errors.last_name && formik.touched.last_name ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.last_name}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
 
@@ -219,8 +234,12 @@ useEffect(()=>{
                       onBlur={formik.handleBlur}
                       value={formik.values.username}
                     />
-                    {formik.errors.username && formik.touched.username ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.username} </span>) : null }
-
+                    {formik.errors.username && formik.touched.username ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.username}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
 
@@ -240,8 +259,13 @@ useEffect(()=>{
                       onBlur={formik.handleBlur}
                       value={formik.values.email}
                     />
-                  
-                    {formik.errors.email && formik.touched.email ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.email} </span>) : null }
+
+                    {formik.errors.email && formik.touched.email ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.email}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
 
@@ -262,8 +286,12 @@ useEffect(()=>{
                       value={formik.values.password}
                     />
 
-                    {formik.errors.password && formik.touched.password ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.password} </span>) : null }
-
+                    {formik.errors.password && formik.touched.password ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.password}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
 
@@ -284,9 +312,12 @@ useEffect(()=>{
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.errors.password1 && formik.touched.password1 ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.password1} </span>) : null }
-
-
+                    {formik.errors.password1 && formik.touched.password1 ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.password1}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
 
@@ -304,8 +335,12 @@ useEffect(()=>{
                       onBlur={formik.handleBlur}
                       value={formik.values.phone_no}
                     />
-                    {formik.errors.phone_no && formik.touched.phone_no ? ( <span style={{color:'red', fontSize:'13px'}}>  {formik.errors.phone_no} </span>) : null }
-
+                    {formik.errors.phone_no && formik.touched.phone_no ? (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {" "}
+                        {formik.errors.phone_no}{" "}
+                      </span>
+                    ) : null}
                   </Form.Group>
                 </Col>
               </Row>
@@ -324,21 +359,25 @@ useEffect(()=>{
               </Button>
             </Form>
             <div>
-          <GoogleLogin
-          clientId={clientId}
-          buttonText="Login"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          cookiePolicy={'sinngle_host_origin'}
-          style={{
-            border: "none",
-            margin: " 0 auto",
-          }}
-          isSignedIn={true}
+              {showLoginButton ? (
+                <GoogleLogin
+                  clientId={clientId}
+                  buttonText="Sign In"
+                  onSuccess={onLoginSuccess}
+                  onFailure={onLoginFailure}
+                  cookiePolicy={"single_host_origin"}
+                  isSignedIn={true}
+                />
+              ) : null}
 
-          />
-          
-          </div>
+              {showLogoutButton ? (
+                <GoogleLogout
+                  clientId={clientId}
+                  buttonText="Sign Out"
+                  onLogoutSuccess={onSignOutSuccess}
+                ></GoogleLogout>
+              ) : null}
+            </div>
 
             <p
               style={{
@@ -351,7 +390,6 @@ useEffect(()=>{
               <br /> and Fair Use Policy.
             </p>
           </Col>
-          
         </Row>
       </Container>
     </>
