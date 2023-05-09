@@ -75,8 +75,8 @@ function Dashboard() {
 
   var formdata = new FormData();
   formdata.append("resume", acceptedFiles[0]);
-  formdata.append("resume_logo", formdata[0]);
-  formdata.append("company_name", inputValue[0]);
+  // formdata.append("resume_logo", formdata[0]);
+  // formdata.append("company_name", inputValue[0]);
 
 
   var myHeaders = new Headers();
@@ -201,7 +201,7 @@ console.log('Images data is ' ,fileData)
 
   // Extra Input Field
   const [inputValue, setInputValue] = useState('');
-  console.log('Website data is ' ,inputValue)
+  // console.log('Website data is ' ,inputValue)
 
 const handleInputChange = (event) => {
   setInputValue(event.target.value);
@@ -216,45 +216,49 @@ function submitAll(){
   return (
     <>
       <Container fluid>
+     
+      <Row style={{ background: "#1b1b1b", height: "200px" }}>
+      <form>
+      <Col md="12">
       <label htmlFor="" style={{color:'#fff', marginRight:'10px'}} >Choose Image</label>
       <input type="file" onChange={handleImageChange}/>
       <label htmlFor="" style={{color:'#fff', marginRight:'10px'}}>Enter Company Name</label>
       <input type="text" value={inputValue} onChange={handleInputChange}/>
-      <Row style={{ background: "#1b1b1b", height: "200px" }}>
-          <Col md="12">
-            <section className="container">
-              <div
-                {...getRootProps({ className: "dropzone" })}
-                style={{
-                  textAlign: "center",
-                  color: "#fff",
-                  background: "",
-                  height: "200px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-              
-                <p style={{ color: "gray", fontWeight: "bold" }}>
-                  Drop Down your CV
-                </p>
-                <aside style={thumbsContainer}>{thumbs}</aside>
-                <ToastContainer autoClose={2000}/>
-                <Button variant="success" className="nav_upgrade_btn">
-                  Upload CV
-                </Button>{" "}
-                  
-              </div>
+      <section className="container">
+        <div
+          {...getRootProps({ className: "dropzone" })}
+          style={{
+            textAlign: "center",
+            color: "#fff",
+            background: "",
+            height: "200px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+        
+          <p style={{ color: "gray", fontWeight: "bold" }}>
+            Drop Down your CV
+          </p>
+          <aside style={thumbsContainer}>{thumbs}</aside>
+          <ToastContainer autoClose={2000}/>
+          <Button variant="success" className="nav_upgrade_btn">
+            Upload CV
+          </Button>{" "}
+            
+        </div>
 
-                <button onClick={submitAll} style={{margin:'0 auto', display:'block'}}>Submit Data Here</button>
-            </section>
-          </Col>
+          <button onClick={submitAll} style={{margin:'0 auto', display:'block'}}>Submit Data Here</button>
+      </section>
+    </Col>
+      </form>
+      
         </Row>
       </Container>
       {/* Choose Your Template*/}
-      <Container fluid style={{ padding: "30px 15px", backgroundColor: "" }}>
+      <Container fluid style={{ padding: "80px 15px", backgroundColor: "" }}>
         <Row style={{ backgroundColor: "" }}>
           <Col md="12">
             <p
