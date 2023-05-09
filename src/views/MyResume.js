@@ -17,16 +17,18 @@ import {
  import DataTable from "react-data-table-component";
 
 function MyResume() {
-
-  var a = 'ravi';
-  console.log(a);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   useEffect(() => {
     const loadResume = async () => {
       setLoading(true);
     let store = JSON.parse(localStorage.getItem("login"));
-    let authToken = store.token;
+    if(store.token){
+      let authToken = store.token
+    }else{
+      alert('404 page not found')
+    }
+    
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${authToken}`);
       const response = await axios(`http://16.16.70.121/userresume/`,{

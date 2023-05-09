@@ -52,6 +52,8 @@ function SignIn() {
           if (data.access) {
             toast.success("Success Notification !");
             history.push("/admin/dashboard ");
+          }else{
+            toast.success("Success Notification !");
           }
           setUser(data.access);
           if (data.detail) {
@@ -70,20 +72,11 @@ function SignIn() {
 
 
   function googleSignIn(){
-
     fetch(`${process.env.REACT_APP_BASE_URL}google/`, {
       method: "GET"
     })
       .then((response) => response.json())
       .then((data) => {
-        // localStorage.setItem(
-        //   "login",
-        //   JSON.stringify({
-        //     login: true,
-        //     token: data.access,
-        //   })
-        // );
-        console.log('data is ' , data)
         if (data.access) {
           toast.success("Success Notification !");
           history.push("/admin/dashboard ");

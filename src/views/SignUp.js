@@ -41,9 +41,6 @@ const onSignOutSuccess = () => {
    setShowLogoutButton(false);
  };
 
-
-
-
   // using Formik
   const formInitialValues = {
     first_name: "",

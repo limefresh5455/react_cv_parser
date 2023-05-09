@@ -17,12 +17,6 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import { Link, Redirect } from "react-router-dom";
 
 function Home({ authorized }) {
-  if (!authorized) {
-    return <Redirect to="/signin" />;
-  }
-
-
-  
   useEffect(() => {
     (() => {
       const openNavMenu = document.querySelector(".open-nav-menu"),

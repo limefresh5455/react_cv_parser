@@ -57,7 +57,6 @@ function Admin() {
           <Footer />
         </div>
       </div>
-   
     </>
   );
 }

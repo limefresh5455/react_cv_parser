@@ -9,27 +9,30 @@ import {
 } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-// import "./assets/css/animate.min.css";
 import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
-// import "./assets/css/demo.css";
-// import "@fortawesome/fontawesome-free/css/all.min.css";
-
 import AdminLayout from "layouts/Admin.js";
 import Home from "Home";
 import SignIn from "views/SignIn";
 import SignUp from "views/SignUp";
-// import ProtectedRoute from "protectedRoute";
+import ProtectedRout from "components/Navbars/ProtectedRout";
+import Dashboard from "views/Dashboard.js";
+import UserProfile from "views/UserProfile.js";
+import Typography from "views/Typography.js";
+import MyResume from "views/MyResume";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <Router>
     <Switch>
-      <Route exact path="/" render={(props) => <Home authorized={true}/>} />
+      <Route exact path="/" render={(props) => <Home/>} />
       <Route path="/signin" render={(props) => <SignIn />} />
       <Route path="/signup" render={(props) => <SignUp />} />
+      <Route path="/typography" render={(props) =>  <ProtectedRout Component={Typography }/>}/>
+      <Route path="/myResume" render={(props) =>  <ProtectedRout Component={MyResume }/>}/>
+      <Route path="/dashboard" render={(props) =>  <ProtectedRout Component={Dashboard }/>}/>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
+      <Route path="/userProfile" render={(props) => <ProtectedRout Component={UserProfile }/>} />
     </Switch>
   </Router>
 

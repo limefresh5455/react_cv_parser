@@ -52,8 +52,8 @@ const img = {
 function Dashboard() {
 // Loader
 
-  let store =JSON.parse(localStorage.getItem('login'));
-  let authToken = store.token
+ 
+  
   const [files, setFiles] = React.useState([]);
   console.log('pdf file is ', files);
 
@@ -80,18 +80,20 @@ function Dashboard() {
 
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${authToken}`);
-  
+  let store =JSON.parse(localStorage.getItem('login'));
+  if(store.token){
+    let authToken = store.token
+    myHeaders.append("Authorization", `Bearer ${authToken}`);
+  }else{
+    alert('404 page not found')
+  }
+
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-
- 
-
-
      fetch(`https://44eb-182-70-252-19.ngrok-free.app/upload/`, requestOptions)
       .then(response => response.json())
       
