@@ -4,99 +4,52 @@ import ChartistGraph from "react-chartist";
 import Dropzone from "react-dropzone";
 import { useDropzone } from "react-dropzone";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Form from "react-bootstrap/Form";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-
-
-import {
-   Button,
-  Card,
-   Container,
-  Row,
-  Col,
- } from "react-bootstrap";
-
-const thumbsContainer = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  marginTop: 0,
-  marginBottom: 10,
-};
-
-const thumb = {
-  display: "inline-flex",
-  borderRadius: 2,
-  border: "1px solid #eaeaea",
-  marginBottom: 8,
-  marginRight: 8,
-  width: 70,
-  height: 70,
-  padding: 4,
-  boxSizing: "border-box",
-};
-
-const thumbInner = {
-  display: "flex",
-  minWidth: 0,
-  overflow: "hidden",
-};
-
-const img = {
-  display: "block",
-  width: "auto",
-  height: "100%",
-};
+import { Button, Card, Container, Row, Col } from "react-bootstrap";
 
 function Dashboard() {
-// Loader
+  // 3 State for PDF,LOGO,TEXT
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
+  const [file3, setFile3] = useState("");
 
- 
-  
-  const [files, setFiles] = React.useState([]);
-  console.log('pdf file is ', files);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      file1Name: file1.name,
+      file2Name: file2.name,
+      file3Name: file3,
+    };
+    console.log(data);
 
-  
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "pdf/*": [],
-    },
-    onDrop: (acceptedFiles) => {
-      console.log("accepted file is " + acceptedFiles);
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-      // let kb = acceptedFiles[0].size/1024;
+//Upload Resume
+var autoToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzODA2ODQwLCJpYXQiOjE2ODM3MjA0NDAsImp0aSI6ImZkNWM2MjJjN2MyZjQyNzhhMzdmMDYwNjQ2Y2UwNDUwIiwidXNlcl9pZCI6NX0.rpIQXAEP2Bz8OZLA7rlXVwJjkxJWyH0LPTVMuR_dSZM'
+var formdata = new FormData();
+console.log('formis ' ,formdata);
 
-  var formdata = new FormData();
-  formdata.append("resume", acceptedFiles[0]);
-  // formdata.append("resume_logo", formdata[0]);
-  // formdata.append("company_name", inputValue[0]);
+const nameIs = formdata.get('name')
+console.log('name is', nameIs);
 
+ formdata.append("resume", file1);
+ formdata.append("resume_logo", file2);
+ formdata.append("company_name", file3);
 
   var myHeaders = new Headers();
-  let store =JSON.parse(localStorage.getItem('login'));
-  if(store.token){
-    let authToken = store.token
-    myHeaders.append("Authorization", `Bearer ${authToken}`);
-  }else{
-    alert('404 page not found')
-  }
-
+  myHeaders.append("Authorization", `Bearer ${autoToken}`);
+  
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formdata,
     redirect: 'follow'
   };
-     fetch(`https://44eb-182-70-252-19.ngrok-free.app/upload/`, requestOptions)
+ 
+     fetch(`https://311b-182-70-252-19.ngrok-free.app/upload/`, requestOptions)
       .then(response => response.json())
-      
   .then((result) =>{if(result.success){
     toast.success('Successfully Upload!',{
       position: toast.POSITION.TOP_CENTER,
@@ -104,160 +57,130 @@ function Dashboard() {
     })
   }} )
   .catch(error => console.error(error));
-    },
-  });
+ 
 
 
-  const files1 = JSON.stringify(files);
-  const files2 = JSON.parse(files1);
-  const thumbs = files.map((file) => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img
-          src={file.preview}
-          style={img}
-          // Revoke data uri after image is loaded
-          onLoad={() => {
-            URL.revokeObjectURL(file.preview);
-          }}
-        />
-      </div>
-    </div>
-  ));
-
-  React.useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
-  const handleImageDrop = (acceptedFiles) => {
-  setImageFile(acceptedFiles[0]);
-};
-
-// Downnlaod API English
-
-function downloadDataEng()
-{
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${authToken}`);
-
-  var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow'
-    
   };
 
-  fetch(`https://44eb-182-70-252-19.ngrok-free.app/download/3`,requestOptions)
-  .then(response => response.blob())
-  .then(blob => {
-    const url = window.URL.createObjectURL(new Blob([blob]));
-    console.log("download is " +url);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'document.docx');
-    document.body.appendChild(link);
-    link.click();
-  });
-}
 
 
-// Download in German
-function downloadDataGer()
-{
-// Options
-var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${authToken}`);
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
+  // Downnlaod API English
 
-fetch('https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8',requestOptions)
-.then(response => response.blob())
-.then(blob => {
-  const url = window.URL.createObjectURL(new Blob([blob]));
-  console.log("download is " +url);
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', 'document.docx');
-  document.body.appendChild(link);
-  link.click();
-});
-}
+  function downloadDataEng() {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authToken}`);
 
-// Extra Image Upload
-
-const [fileData, setFileData] = useState([]);
-console.log('Images data is ' ,fileData)
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const fileData = event.target.result;
-      setFileData(fileData);
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
     };
-      
-  };
 
-  // Extra Input Field
-  const [inputValue, setInputValue] = useState('');
-  // console.log('Website data is ' ,inputValue)
+    fetch(
+      `https://44eb-182-70-252-19.ngrok-free.app/download/3`,
+      requestOptions
+    )
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "document.docx");
+        document.body.appendChild(link);
+        link.click();
+      });
+  }
 
-const handleInputChange = (event) => {
-  setInputValue(event.target.value);
-  console.log(event.target.value);
-};
+  // Download in German
+  function downloadDataGer() {
+    // Options
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authToken}`);
 
-  // Submit All Field
-function submitAll(){
-  alert('hiiii')
-}
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://ed9d-182-70-252-19.ngrok-free.app/downloadgerman/8",
+      requestOptions
+    )
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        console.log("download is " + url);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "document.docx");
+        document.body.appendChild(link);
+        link.click();
+      });
+  }
 
   return (
     <>
       <Container fluid>
-     
-      <Row style={{ background: "#1b1b1b", height: "200px" }}>
-      <form>
-      <Col md="12">
-      <label htmlFor="" style={{color:'#fff', marginRight:'10px'}} >Choose Image</label>
-      <input type="file" onChange={handleImageChange}/>
-      <label htmlFor="" style={{color:'#fff', marginRight:'10px'}}>Enter Company Name</label>
-      <input type="text" value={inputValue} onChange={handleInputChange}/>
-      <section className="container">
-        <div
-          {...getRootProps({ className: "dropzone" })}
-          style={{
-            textAlign: "center",
-            color: "#fff",
-            background: "",
-            height: "200px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-        
-          <p style={{ color: "gray", fontWeight: "bold" }}>
-            Drop Down your CV
-          </p>
-          <aside style={thumbsContainer}>{thumbs}</aside>
-          <ToastContainer autoClose={2000}/>
-          <Button variant="success" className="nav_upgrade_btn">
-            Upload CV
-          </Button>{" "}
-            
-        </div>
+        <form onSubmit={handleSubmit}>
+          <Row style={{ background: "#1b1b1b", height: "" }}>
+            <Col style={{ backgroundColor: "black",height:'200px' }}>
+              {/*  <label for="images" class="drop-container">
+                <span class="drop-title">Drop CV here</span>
+                or
+                <input type="file" id="images" accept="image/*" required />
+              </label> */}
 
-          <button onClick={submitAll} style={{margin:'0 auto', display:'block'}}>Submit Data Here</button>
-      </section>
-    </Col>
-      </form>
-      
-        </Row>
+              <label htmlFor="file1" class="drop-container">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+         
+                <span class="drop-title">Drop CV here</span>
+                or
+                <input
+                  type="file"
+                  id="file1"
+                  name="resume"
+                  onChange={(e) => setFile1(e.target.files[0])}
+                />
+              </label>
+            </Col>
+            <Col style={{ backgroundColor: "black",height:'200px' }}>
+              <label htmlFor="file2" class="drop-container">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                <span class="drop-title">Drop Logo here</span>
+                or
+                <input 
+                type="file" 
+                id="file2" 
+                name="logo"
+                accept="image/*" 
+                onChange={(e) => setFile2(e.target.files[0])}
+                required />
+              </label>
+            </Col>
+
+            <Col style={{ backgroundColor: "black",height:'200px' }}>
+              <label htmlFor="file3" class="drop-container">
+                <span class="drop-title">Drop files here</span>
+                or
+                <input 
+                type="text" 
+                id="file3" 
+                name="company"
+                accept="image/*" 
+              onChange={(e) => setFile3(e.target.value)}
+                required />
+              </label>
+            </Col>
+          </Row>
+          <Row style={{margin:'20px 0'}}>
+          <button className="btn btn-primary m-auto" style={{ }} type="submit">
+            Submit
+          </button>
+
+          </Row>
+                  </form>
       </Container>
       {/* Choose Your Template*/}
       <Container fluid style={{ padding: "80px 15px", backgroundColor: "" }}>
@@ -320,39 +243,35 @@ function submitAll(){
         {/* Generate Button */}
         <Row>
           <Col lg="12" className="text-center">
-            {files2 == "" ? (
-              <Button
-                variant="success"
-                className="nav_upgrade_btn"
-                style={{ fontWeight: "bold" }}
-              >
-                Generate
-              </Button>
-            ) : (
-              <>
-                <h5 style={{ color: "gray", fontWeight: "bold" }}>
-                  {" "}
-                  Your Profile has been generated
-                </h5>
-                <Button
-                  variant="success"
-                  className="nav_upgrade_btn"
-                  style={{ fontWeight: "bold" }}
-                  onClick={downloadDataEng}
-                >
-                  Download in English
-                </Button>
+            <Button
+              variant="success"
+              className="nav_upgrade_btn"
+              style={{ fontWeight: "bold" }}
+            >
+              Generate
+            </Button>
 
-                <Button
-                variant="success"
-                className="nav_upgrade_btn"
-                style={{ fontWeight: "bold", marginLeft:'40px' }}
-                onClick={downloadDataGer}
-              >
-                Download in German
-              </Button>
-              </>
-            )}
+            <h5 style={{ color: "gray", fontWeight: "bold" }}>
+              {" "}
+              Your Profile has been generated
+            </h5>
+            <Button
+              variant="success"
+              className="nav_upgrade_btn"
+              style={{ fontWeight: "bold" }}
+              onClick={downloadDataEng}
+            >
+              Download in English
+            </Button>
+
+            <Button
+              variant="success"
+              className="nav_upgrade_btn"
+              style={{ fontWeight: "bold", marginLeft: "40px" }}
+              onClick={downloadDataGer}
+            >
+              Download in German
+            </Button>
           </Col>
         </Row>
       </Container>
